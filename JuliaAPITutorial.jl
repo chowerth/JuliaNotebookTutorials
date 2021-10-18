@@ -70,14 +70,55 @@ _If you already had `HTTP` installed, then this will just use the globally insta
 
 # ╔═╡ 516ff38e-f201-488e-beaf-0818e996f92a
 begin
-	req1 = HTTP.get("https://www.affirmations.dev/")
-	affirmation = JSON.parse(String(req1.body))
+	affirm_url = "https://www.affirmations.dev/"
+	affirm_resp = HTTP.get(affirm_url)
+	affirmation = JSON.parse(String(affirm_resp.body))
 end
+
+# ╔═╡ 9ba9d9a2-8db3-4425-8858-80dba3481c92
+md"""
+Getting an image from the picsum api...
+"""
 
 # ╔═╡ 9e90358f-a46b-49c8-8395-146ab0b6820d
 begin
-	req2 = HTTP.get("https://picsum.photos/seed/picsum/200/300")
-	random_image = req2.body
+	image_url = "https://picsum.photos/seed/picsum/200/300"
+	image_resp = HTTP.get(image_url)
+	random_image = image_resp.body
+end
+
+# ╔═╡ 5456f3d8-da31-4b41-853f-b485d1b0e3f3
+md"""
+The guy below gets data from the github repo's db.json
+"""
+
+# ╔═╡ 1e04bc4c-fe6c-4a3c-9ece-076e63089b1d
+begin
+	get_url = "https://my-json-server.typicode.com/chowerth/JuliaNotebookTutorials/posts/1"
+	get_resp = HTTP.get(get_url)
+	my_get = JSON.parse(String(get_resp.body))
+end
+
+# ╔═╡ ad59d4d6-b676-4b98-a4f0-9150b679cf94
+begin
+	post_url = "https://my-json-server.typicode.com/chowerth/JuliaNotebookTutorials/posts"
+	post_headers = ["Content-Type" => "application/json"]
+	post_body = JSON.json(Dict("id" => 2, "title" => "Testing a post"))
+	my_post = HTTP.post(post_url, post_headers, post_body)	
+end
+
+# ╔═╡ 20302e31-102d-4eb6-a516-5e4bdf3ff2d8
+begin
+	put_url = "https://my-json-server.typicode.com/chowerth/JuliaNotebookTutorials/posts/1"
+	put_headers = ["Content-Type" => "application/json"]
+	put_body = JSON.json(Dict("title" => "Testing a put"))
+	my_put = HTTP.put(put_url, put_headers, put_body)	
+end
+
+# ╔═╡ f2fcb52b-72c4-45d3-8ba3-fb5cb90d07eb
+begin
+	delete_url = "https://my-json-server.typicode.com/chowerth/JuliaNotebookTutorials/posts/1"
+	my_delete = HTTP.delete(delete_url)	
 end
 
 # ╔═╡ Cell order:
@@ -94,4 +135,10 @@ end
 # ╠═ac1ff1c2-6a98-11eb-24f7-0bc38362d87b
 # ╟─5ee4b700-6a99-11eb-04b5-550e4126606f
 # ╠═516ff38e-f201-488e-beaf-0818e996f92a
+# ╠═9ba9d9a2-8db3-4425-8858-80dba3481c92
 # ╠═9e90358f-a46b-49c8-8395-146ab0b6820d
+# ╠═5456f3d8-da31-4b41-853f-b485d1b0e3f3
+# ╠═1e04bc4c-fe6c-4a3c-9ece-076e63089b1d
+# ╠═ad59d4d6-b676-4b98-a4f0-9150b679cf94
+# ╠═20302e31-102d-4eb6-a516-5e4bdf3ff2d8
+# ╠═f2fcb52b-72c4-45d3-8ba3-fb5cb90d07eb
